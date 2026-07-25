@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | BLACK 🖤 ENTHEM</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-body">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="admin-screen active">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="admin-logo">
+                    <div class="logo-animation">
+                        <div class="shield-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>BLACK <span class="heart">🖤</span> ENTHEM</h1>
+                            <p class="subtitle">Administrator Control Panel</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="login-intro">Secure access to system monitoring and user management</p>
+            </div>
+            
+            <div class="login-form-container">
+                <div class="login-form">
+                    <h2><i class="fas fa-user-shield"></i> Administrator Login</h2>
+                    
+                    <div class="form-group">
+                        <label for="adminId" class="form-label">
+                            <i class="fas fa-user-cog"></i> Admin ID
+                        </label>
+                        <input type="text" id="adminId" class="form-input" 
+                               placeholder="Enter administrator ID" autocomplete="off">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adminPassword" class="form-label">
+                            <i class="fas fa-key"></i> Password
+                        </label>
+                        <input type="password" id="adminPassword" class="form-input" 
+                               placeholder="Enter your password" autocomplete="off">
+                    </div>
+                    
+                    <button id="adminLoginBtn" class="login-button">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login to Dashboard</span>
+                        <div class="button-shine"></div>
+                    </button>
+                    
+                    <div class="security-notice">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>This panel contains sensitive information. Keep credentials secure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="admin-screen">
+        <!-- Top Navigation -->
+        <nav class="admin-nav">
+            <div class="nav-left">
+                <div class="brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <div class="brand-text">
+                        <h2>ADMIN PANEL</h2>
+                        <p class="brand-sub">BLACK 🖤 ENTHEM</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <div class="nav-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalUsers">0</span>
+                            <span class="stat-label">Total Users</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-user-clock"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="onlineUsers">0</span>
+                            <span class="stat-label">Online Now</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-flag"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalReports">0</span>
+                            <span class="stat-label">Reports</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-ban"></i>
+                        <div class="stat-info">
+                            <span class="stat-value" id="blockedUsers">0</span>
+                            <span class="stat-label">Blocked</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <button id="refreshBtn" class="nav-btn refresh-btn" title="Refresh Data">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>Refresh</span>
+                </button>
+                <button id="logoutBtn" class="nav-btn logout-btn" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+                <div class="server-time" id="serverTime">
+                    <i class="far fa-clock"></i>
+                    <span>--:--:--</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Reports Section -->
+                <div class="dashboard-card reports-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-flag"></i> User Reports</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn" title="Mark all as read">
+                                <i class="fas fa-check-double"></i>
+                            </button>
+                            <button class="card-action-btn" title="Filter">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table" id="reportsTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Reported User</th>
+                                        <th>Reporter</th>
+                                        <th>Reason</th>
+                                        <th>Status</th>
+                                        <th>Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="no-data-row">
+                                        <td colspan="7">No reports available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn-view-all" id="viewAllReports">
+                            <i class="fas fa-list"></i> View All Reports
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Online Users Section -->
+                <div class="dashboard-card online-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-user-clock"></i> Online Users</h3>
+                        <div class="live-badge">
+                            <span class="live-dot"></span>
+                            LIVE
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="online-users-list" id="onlineList">
+                            <!-- Users will be loaded here -->
+                            <div class="no-online-users">
+                                <i class="fas fa-users-slash"></i>
+                                <p>No users online</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="connection-stats">
+                            <div class="stat">
+                                <span class="stat-label">Active Calls:</span>
+                                <span class="stat-value" id="activeCalls">0</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Waiting:</span>
+                                <span class="stat-value" id="waitingUsers">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blocked Devices -->
+                <div class="dashboard-card blocked-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-ban"></i> Blocked Devices</h3>
+                        <button class="card-action-btn add-block" title="Add New Block">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table" id="blockedTable">
+                                <thead>
+                                    <tr>
+                                        <th>IP Address</th>
+                                        <th>Device ID</th>
+                                        <th>Reason</th>
+                                        <th>Blocked On</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="no-data-row">
+                                        <td colspan="5">No blocked devices</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="quick-block">
+                            <input type="text" id="quickBlockIP" placeholder="Enter IP to block">
+                            <button id="quickBlockBtn" class="btn-danger">
+                                <i class="fas fa-ban"></i> Block
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Monitor -->
+                <div class="dashboard-card system-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> System Monitor</h3>
+                        <div class="card-actions">
+                            <button class="card-action-btn" title="Auto-refresh">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="system-stats">
+                            <div class="system-stat">
+                                <div class="stat-icon cpu">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-label">CPU Usage</span>
+                                    <span class="stat-value" id="cpuUsage">0%</span>
+                                </div>
+                            </div>
+                            <div class="system-stat">
+                                <div class="stat-icon memory">
+                                    <i class="fas fa-memory"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Memory</span>
+                                    <span class="stat-value" id="memoryUsage">0%</span>
+                                </div>
+                            </div>
+                            <div class="system-stat">
+                                <div class="stat-icon database">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Database</span>
+                                    <span class="stat-value" id="dbSize">0 MB</span>
+                                </div>
+                            </div>
+                            <div class="system-stat">
+                                <div class="stat-icon connections">
+                                    <i class="fas fa-plug"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <span class="stat-label">Connections</span>
+                                    <span class="stat-value" id="activeConnections">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="server-info">
+                            <h4><i class="fas fa-server"></i> Server Information</h4>
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <span class="info-label">Uptime:</span>
+                                    <span class="info-value" id="serverUptime">0h 0m</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Version:</span>
+                                    <span class="info-value">2.0.0</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Developer:</span>
+                                    <span class="info-value">Nitish Sharma</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Last Update:</span>
+                                    <span class="info-value" id="lastUpdate">Just now</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="dashboard-card activity-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                        <div class="time-filter">
+                            <select id="activityFilter" class="filter-select">
+                                <option value="5">Last 5 min</option>
+                                <option value="15" selected>Last 15 min</option>
+                                <option value="30">Last 30 min</option>
+                                <option value="60">Last hour</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-log" id="activityLog">
+                            <!-- Activity items will be loaded here -->
+                            <div class="no-activity">
+                                <i class="fas fa-history"></i>
+                                <p>No recent activity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Connections -->
+                <div class="dashboard-card connections-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-network-wired"></i> Active Connections</h3>
+                        <div class="connection-count">
+                            <span id="connectionCount">0</span> active
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="connections-list" id="connectionsList">
+                            <!-- Connections will be loaded here -->
+                            <div class="no-connections">
+                                <i class="fas fa-wifi-slash"></i>
+                                <p>No active connections</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn-disconnect-all" id="disconnectAllBtn">
+                            <i class="fas fa-plug"></i> Disconnect All
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Panel -->
+            <div class="action-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-cogs"></i> Quick Actions</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="action-grid">
+                        <button class="action-btn maintenance-btn" id="maintenanceBtn">
+                            <i class="fas fa-tools"></i>
+                            <span>Maintenance Mode</span>
+                        </button>
+                        <button class="action-btn cleanup-btn" id="cleanupBtn">
+                            <i class="fas fa-broom"></i>
+                            <span>Cleanup Database</span>
+                        </button>
+                        <button class="action-btn backup-btn" id="backupBtn">
+                            <i class="fas fa-save"></i>
+                            <span>Backup Data</span>
+                        </button>
+                        <button class="action-btn logs-btn" id="logsBtn">
+                            <i class="fas fa-scroll"></i>
+                            <span>View Logs</span>
+                        </button>
+                        <button class="action-btn settings-btn" id="settingsBtn">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Settings</span>
+                        </button>
+                        <button class="action-btn help-btn" id="helpBtn">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Help & Support</span>
+                        </button>
+                    </div>
+                    
+                    <div class="manual-block-section">
+                        <h4><i class="fas fa-user-slash"></i> Manual Block Device</h4>
+                        <div class="block-form">
+                            <div class="form-row">
+                                <input type="text" id="blockIP" placeholder="IP Address" class="block-input">
+                                <input type="text" id="blockReason" placeholder="Reason for blocking" class="block-input">
+                            </div>
+                            <div class="form-row">
+                                <input type="text" id="blockDeviceId" placeholder="Device ID (Optional)" class="block-input">
+                                <button id="blockBtn" class="btn-block-now">
+                                    <i class="fas fa-ban"></i> Block Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="admin-footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p class="copyright">
+                        <i class="far fa-copyright"></i> 2024 BLACK 🖤 ENTHEM | Admin Panel v2.0
+                    </p>
+                    <p class="developer-info">
+                        <i class="fas fa-code"></i> Developed by <strong>Nitish Sharma</strong>
+                    </p>
+                </div>
+                <div class="footer-right">
+                    <div class="status-indicator">
+                        <div class="status-dot online"></div>
+                        <span class="status-text">System Status: <strong>Online</strong></span>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link" id="adminDocs">Documentation</a>
+                        <span class="separator">|</span>
+                        <a href="#" class="footer-link" id="supportLink">Support</a>
+                        <span class="separator">|</span>
+                        <a href="/" class="footer-link" id="goToChat">Go to Chat</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="blockModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-ban"></i> Block Device</h3>
+                <button class="modal-close close-block-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Block form will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="confirm-icon" id="confirmIcon"></div>
+                <h4 id="confirmTitle"></h4>
+                <p id="confirmMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="confirmCancel">Cancel</button>
+                <button class="btn-danger" id="confirmOk">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="adminNotifications" class="notification-container">
+        <!-- Notifications will appear here -->
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

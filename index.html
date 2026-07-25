@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACK 🖤 ENTHEM | Anonymous Video Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1><span class="black">BLACK</span> <span class="heart">🖤</span> <span class="enthem">ENTHEM</span></h1>
+                <p class="tagline">Connect Anonymously With Strangers</p>
+            </div>
+            <div class="online-counter">
+                <div class="counter-icon">
+                    <i class="fas fa-users"></i>
+                    <div class="pulse-dot"></div>
+                </div>
+                <div class="counter-info">
+                    <span id="onlineCount" class="count">0</span>
+                    <span class="label">Online Now</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Join Screen -->
+            <div id="joinScreen" class="screen active">
+                <div class="join-container">
+                    <div class="welcome-section">
+                        <div class="animated-logo">
+                            <div class="pulse-ring"></div>
+                            <div class="pulse-ring delay-1"></div>
+                            <div class="logo-core">
+                                <i class="fas fa-video"></i>
+                            </div>
+                        </div>
+                        <h2 class="welcome-title">Welcome to Anonymous Chat</h2>
+                        <p class="welcome-subtitle">Talk with strangers around the world, completely anonymously</p>
+                    </div>
+                    
+                    <div class="join-form">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <input type="text" id="username" placeholder="Choose your display name" maxlength="20">
+                            <div class="input-hint">Max 20 characters</div>
+                        </div>
+                        
+                        <button id="joinBtn" class="join-button">
+                            <i class="fas fa-play-circle"></i>
+                            <span>Start Chatting</span>
+                            <div class="button-glow"></div>
+                        </button>
+                    </div>
+                    
+                    <div class="searching-status" id="searchingStatus" style="display: none;">
+                        <div class="spinner"></div>
+                        <p>Searching for someone to chat with...</p>
+                    </div>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon security">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Secure & Private</h3>
+                            <p>End-to-end encrypted messages</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon anonymous">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <h3>100% Anonymous</h3>
+                            <p>No personal info required</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon random">
+                                <i class="fas fa-random"></i>
+                            </div>
+                            <h3>Random Matching</h3>
+                            <p>Meet new people instantly</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon global">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <h3>Global Community</h3>
+                            <p>Connect worldwide</p>
+                        </div>
+                    </div>
+                    
+                    <div class="developer-info">
+                        <div class="developer-badge">
+                            <div class="badge-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="badge-content">
+                                <p class="dev-name">Developer: <span>Nitish Sharma</span></p>
+                                <p class="powered-by">Powered by <span class="brand">BLACK 🖤 ENTHEM</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Screen -->
+            <div id="chatScreen" class="screen">
+                <div class="chat-container">
+                    <!-- Chat Header -->
+                    <div class="chat-header">
+                        <div class="partner-info">
+                            <div class="partner-avatar">
+                                <i class="fas fa-user-secret"></i>
+                                <div class="partner-status" id="partnerStatus"></div>
+                            </div>
+                            <div class="partner-details">
+                                <h3 id="partnerName">Stranger</h3>
+                                <p class="connection-status" id="connectionStatus">Connecting...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-controls">
+                            <button id="nextBtn" class="control-btn next-btn" title="Next Person">
+                                <i class="fas fa-forward"></i>
+                                <span>Next</span>
+                            </button>
+                            <button id="reportBtn" class="control-btn report-btn" title="Report User">
+                                <i class="fas fa-flag"></i>
+                                <span>Report</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Video Container -->
+                    <div class="video-container">
+                        <div class="video-box local-video">
+                            <video id="localVideo" autoplay muted playsinline></video>
+                            <div class="video-overlay">
+                                <div class="video-label">
+                                    <i class="fas fa-user"></i>
+                                    <span>You</span>
+                                </div>
+                                <div class="video-indicator" id="localVideoIndicator">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="video-box remote-video">
+                            <video id="remoteVideo" autoplay playsinline></video>
+                            <div class="video-overlay">
+                                <div class="video-label">
+                                    <i class="fas fa-user-secret"></i>
+                                    <span id="remoteLabel">Stranger</span>
+                                </div>
+                                <div class="video-indicator" id="remoteVideoIndicator">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <div class="waiting-message" id="waitingMessage">
+                                    <div class="spinner small"></div>
+                                    <p>Waiting for partner...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chat Area -->
+                    <div class="chat-area">
+                        <div class="messages-container">
+                            <div id="messages" class="messages">
+                                <div class="welcome-message">
+                                    <i class="fas fa-comments"></i>
+                                    <p>Start chatting with your partner! All messages are encrypted.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="message-input-container">
+                            <div class="input-wrapper">
+                                <input type="text" id="messageInput" placeholder="Type your message here... (Press Enter to send)" maxlength="500">
+                                <button id="sendBtn" class="send-button">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <div class="encryption-notice">
+                                <i class="fas fa-lock"></i>
+                                <span>Messages are end-to-end encrypted</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Media Controls -->
+                    <div class="media-controls">
+                        <div class="controls-grid">
+                            <button id="toggleVideo" class="media-btn video-btn active" title="Toggle Video">
+                                <i class="fas fa-video"></i>
+                                <span>Video</span>
+                            </button>
+                            <button id="toggleAudio" class="media-btn audio-btn active" title="Toggle Audio">
+                                <i class="fas fa-microphone"></i>
+                                <span>Mic</span>
+                            </button>
+                            <button id="endCall" class="media-btn end-btn" title="End Call">
+                                <i class="fas fa-phone-slash"></i>
+                                <span>End</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="safety-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p><strong>Safety First:</strong> Never share personal information. Report inappropriate behavior immediately.</p>
+                </div>
+                <div class="footer-bottom">
+                    <p class="copyright">© 2024 BLACK 🖤 ENTHEM | Developed by Nitish Sharma</p>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link" id="privacyLink">Privacy</a>
+                        <span class="divider">•</span>
+                        <a href="#" class="footer-link" id="termsLink">Terms</a>
+                        <span class="divider">•</span>
+                        <a href="#" class="footer-link" id="safetyLink">Safety Tips</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-flag"></i> Report User</h3>
+                <button class="modal-close" id="closeReportModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Please help us keep the community safe by reporting inappropriate behavior.</p>
+                
+                <div class="form-group">
+                    <label for="reportReason">
+                        <i class="fas fa-exclamation-circle"></i> Reason for Reporting
+                    </label>
+                    <select id="reportReason" class="form-select">
+                        <option value="">Select a reason</option>
+                        <option value="inappropriate_content">Inappropriate Content</option>
+                        <option value="harassment">Harassment or Bullying</option>
+                        <option value="spam">Spam or Advertising</option>
+                        <option value="underage">Underage User</option>
+                        <option value="explicit_content">Explicit Content</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reportDetails">
+                        <i class="fas fa-comment-alt"></i> Additional Details (Optional)
+                    </label>
+                    <textarea id="reportDetails" class="form-textarea" 
+                              placeholder="Please provide more details about the incident..." 
+                              rows="4"></textarea>
+                </div>
+                
+                <div class="warning-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p>This user will be blocked from chatting with you again. Multiple reports may lead to permanent ban.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelReport" class="btn-secondary">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button id="submitReport" class="btn-danger">
+                    <i class="fas fa-paper-plane"></i> Submit Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Center -->
+    <div id="notificationCenter" class="notification-center">
+        <!-- Notifications will be added here -->
+    </div>
+
+    <!-- Privacy Modal -->
+    <div id="privacyModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-shield"></i> Privacy Policy</h3>
+                <button class="modal-close" id="closePrivacyModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="privacy-content">
+                    <h4>Your Privacy Matters</h4>
+                    <p>We are committed to protecting your privacy. Here's how we handle your data:</p>
+                    
+                    <div class="privacy-points">
+                        <div class="privacy-point">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h5>Anonymous Chatting</h5>
+                                <p>No registration required. Only display name is stored temporarily.</p>
+                            </div>
+                        </div>
+                        <div class="privacy-point">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h5>End-to-End Encryption</h5>
+                                <p>All messages are encrypted and cannot be read by anyone else.</p>
+                            </div>
+                        </div>
+                        <div class="privacy-point">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h5>No Personal Data</h5>
+                                <p>We don't collect or store your personal information.</p>
+                            </div>
+                        </div>
+                        <div class="privacy-point">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h5>Automatic Cleanup</h5>
+                                <p>All data is automatically deleted after 24 hours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="closePrivacyBtn">
+                    I Understand
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
